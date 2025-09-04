@@ -1,39 +1,23 @@
-import React, { useState } from "react";
-import Header from "./static/Header";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Taskform from "./pages/Taskform";
-import TaskList from "./pages/Tasklist";   // ✅ added import
-import SignIn from "./pages/SignIn";       // ✅ consistent casing
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import SignUp from "./pages/SignUp";
+import SignIn from "./pages/SignIn";
+import Taskpage from "./pages/Taskpage";
+import Header from "./components/Header";
+import { AuthProvider } from "./context/AuthContext";
 
-const App = () => {
-  const [tasks, setTasks] = useState([]);
-
-  // Add task
-  const addTask = (task) => {
-    setTasks([...tasks, task]);
-  };
-
-  // Delete task
-  const deleteTask = (index) => {
-    const newTasks = tasks.filter((_, i) => i !== index);
-    setTasks(newTasks);
-  };
-
+function App() {
   return (
-    <div>
-      <BrowserRouter>
+    <AuthProvider>
+      <Router>
         <Header />
         <Routes>
-          <Route path="/" element={<Taskform addTask={addTask} />} />
-          <Route
-            path="/tasklist"
-            element={<TaskList tasks={tasks} deleteTask={deleteTask} />}
-          />
+          <Route path="/signup" element={<SignUp />} />
           <Route path="/signin" element={<SignIn />} />
+          <Route path="/" element={<Taskpage />} />
         </Routes>
-      </BrowserRouter>
-    </div>
+      </Router>
+    </AuthProvider>
   );
-};
+}
 
 export default App;
