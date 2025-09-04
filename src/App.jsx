@@ -1,9 +1,10 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import SignUp from "./pages/SignUp";
 import SignIn from "./pages/SignIn";
-import Taskpage from "./pages/Taskpage";
+import Taskpage from "./pages/Taskpage"; // Make sure the casing matches the file
 import Header from "./components/Header";
 import { AuthProvider } from "./context/AuthContext";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 function App() {
   return (
@@ -13,7 +14,16 @@ function App() {
         <Routes>
           <Route path="/signup" element={<SignUp />} />
           <Route path="/signin" element={<SignIn />} />
-          <Route path="/" element={<Taskpage />} />
+          
+          {/* Protected route */}
+          <Route
+            path="/"
+            element={
+              <ProtectedRoute>
+                <Taskpage />
+              </ProtectedRoute>
+            }
+          />
         </Routes>
       </Router>
     </AuthProvider>
